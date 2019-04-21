@@ -1,0 +1,26 @@
+html,body{
+	width: 100%;
+	hieght:100%;
+}
+.wrap{
+	overflow: hidden;
+	width:750px;
+	height:1332px;
+	background:url(../image/bg.jpg);
+	background-size: cover;
+}
+.mui-title{
+	width:473px;
+	height:336px;
+	margin:200px auto 0;
+	background: url(../image/0.jpg) no-repeat;
+	background-size:cover ;
+}
+.conter-btn{
+	width:468px;
+	height:228px;
+	background:url(../image/c.gif);
+	background-size: cover;
+	margin:200px auto 0;
+
+}

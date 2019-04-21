@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+  		  <script>
+				dapat();
+					window.addEventListener("resize", dapat);
+					function dapat() {
+						var oMate = document.createElement("meta");
+						var fixedWidth = 750;
+						var deviceWidth = window.screen.width;
+						var scale = deviceWidth / fixedWidth;
+						var attr = {
+							name: "viewport",
+							content: "width=" + fixedWidth + ",initial-scale=" + scale +
+								",minimum-scale=" + scale + ",maximum-scale=" + scale + ",user-scalable=no"
+						}
+						for (var key in attr) {
+							oMate[key] = attr[key];
+						}
+						document.head.insertBefore(oMate, document.head.children[0]);
+					}
+		  </script>
+    <title></title>
+    <style>
+       
+        body,p,h1,h2,h3,h4,h5,h6{
+            margin: 0;
+            font-size: 20px;
+        }
+		body,html{
+			height:100%;
+		}
+        ul,ol{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        a{
+            text-decoration: none;
+            color: #666;
+        }
+        img{
+            display: block;
+            background-size: 100%;
+        }
+        #wrap{
+            width: 100%;
+            height: 100%;
+            background: url('image/bg.jpg') no-repeat;
+            background-size: 100% 100%;
+        }
+        .main{
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            width: 100%;
+            height: 458px;
+        }
+        .main div{
+          position: relative;
+          width: 200px;
+        
+          margin-top: 300px;
+        }
+        .main div:nth-child(3){
+        	transform: rotateY(30deg);
+        }
+        .main div img{
+          width: 100%;
+          height: 100%;
+        }
+        .main div p{
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translateX(-50%) translateY(-50%);
+          width: 40px;
+          height: 80px;
+          text-align: center;
+          line-height: 60px;
+          color:yellow;
+          font-size:50px;
+          font-weight:bold;
+        }
+        .pen{
+			box-sizing: border-box;
+        	margin-top:80px;
+        	padding:0 10px;
+        	height:314px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+			width: 100%;
+        
+        }
+        .pen div{
+          position: relative;
+          width: 220px;
+          height: 220px;
+         
+        
+        }
+        .pen div img{
+          width: 60%;
+          height: 100%;
+		  margin-left:25px;
+        }
+      
+        .correct{
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height:100%;
+          background: rgba(54,46,43,.6);
+        }
+        .correct p{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          height: 90%;
+         
+        }
+        .correct p img{
+          width: 300px;
+          height: 300px;
+          transform:scale(1.0);
+          transition:all .2s;
+        }
+       
+        .mistake{
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(54,46,43,.6);
+        }
+        .mistake p{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          height: 90%;
+        }
+        .mistake p img{
+          width: 200px;
+          height: 200px;
+        }
+        .middle{
+        	width:100%;
+        	height:300px;
+        	
+        }
+    </style>
+  </head>
+  <body>
+    <div id="wrap">
+      <div class="main">
+       <div class="house1">
+          <img src="image/fang-1.jpg">
+        </div>
+        <div class="house2">
+          <img src="image/fang3.gif">
+        </div>
+        <div class="house3">
+          <img src="image/fang-3.jpg">
+        </div>
+      </div>
+     <div class='middle'></div>
+     <div class="pen">
+        <div class="pen1">
+           <img src="image/f-2.gif">
+        </div>
+        <div class="pen2">
+          <img src="image/f-1.gif">
+        </div>
+        <div class="pen3">
+            <img src="image/f-3.gif">
+          </div>
+      </div>
+    	 <div class="correct">
+			<p><img src="image/da.gif" ></p>
+		 </div>
+      <div class="mistake">
+        <p><img src="image/da1.jpg" ></p>
+      </div>
+    </div>
+    <script src='./js/jquery.js'></script>
+    <script>
+    	let allPen=document.querySelectorAll('.pen div');
+    	let allHome=document.querySelectorAll('.main div');
+    	let mistake=document.querySelector('.mistake');
+    	let correct=document.querySelector('.correct');
+ 			console.log(allPen[0].offsetTop)
+   			let positionAll=[];//笔的位置
+   			let positionHome=[];//房子的位置
+   			
+   			//笔的位置
+   			for(let i=0;i<allPen.length;i++){
+   				let curLeft=allPen[i].offsetLeft;
+   				let curTop=allPen[i].offsetTop;
+   				positionAll.push({'left':curLeft,'top':curTop})
+   				
+   			}
+   			//笔的位置
+   			for(let k=0;k<positionAll.length;k++){
+   				allPen[k].style.position='absolute';
+   				allPen[k].style.left=positionAll[k].left+'px';
+   				allPen[k].style.top=positionAll[k].top+'px';
+   			}
+   			//房子的位置
+   			for(let k=0;k<allHome.length;k++){
+   				let curLeft=allHome[k].offsetLeft;
+   				let curTop=allHome[k].offsetTop;
+   				let curWidth=allHome[k].offsetWidth;
+   				let curHeight=allHome[k].offsetHeight;
+   				positionHome.push({'left':curLeft,'top':curTop,'width':curWidth,'height':curHeight});
+   			}
+   		
+			let	startX,
+					startY,
+					touchStartX,
+					touchStartY,
+					lastX = startX,
+					lastY = startY,
+					deltaX,
+					deltaY;
+    	let vw=window.screen.width*2;
+    	let vh=window.screen.height*2;
+    	let index=0;
+    		for(let i=0;i<allPen.length;i++){
+    			
+					allPen[i].addEventListener('touchstart',(ev)=>{
+			
+						//赋值
+							startX = allPen[i].offsetLeft,
+							startY = allPen[i].offsetTop,
+							lastX = startX,
+							lastY = startY,
+						//获取值
+	    				touchStartX = ev.targetTouches[0].clientX;
+							touchStartY = ev.targetTouches[0].clientY;
+						
+						
+	    		})
+					
+				
+	    		allPen[i].addEventListener("touchmove",function(ev) {
+	    			allPen[i].style.transition='none';
+						var touchMoveX = ev.targetTouches[0].clientX;
+						var touchMoveY = ev.targetTouches[0].clientY;
+						deltaX =  touchMoveX - touchStartX;
+						deltaY =  touchMoveY - touchStartY;
+						
+						
+						let endLeft=deltaX+lastX;
+						let endTop=deltaY+lastY;
+					
+						if(endLeft<=0){
+							endLeft=0;
+						}else if(endLeft>=(vw-allPen[i].offsetWidth-2)){
+							endLeft=vw - allPen[i].offsetWidth;
+						}
+						if(endTop<=0){
+							endTop=0;
+						}else if(endTop>=(vh-allPen[i].offsetHeight)){
+							endTop=vh-allPen[i].offsetHeight;
+						}
+					
+						allPen[i].style.top=endTop+'px';
+						allPen[i].style.left=endLeft+'px';
+						
+	    		});
+					allPen[i].addEventListener('touchend',function(ev) {
+						lastX += deltaX;
+						lastY += deltaY;
+						console.log(lastX,lastY)
+						//检测碰撞
+						//positionHome
+						if(lastX>(positionHome[i].left+positionHome[i].width) ||　
+							(lastX+allPen[i].offsetWidth)<positionHome[i].left ||
+							lastY>(positionHome[i].top+positionHome[i].height) ||
+							(lastY+allPen[i].offsetHeight)<positionHome[i].top
+						){
+							//没有成功
+							$(mistake).fadeIn(1000);
+								setTimeout(function (){
+								$(mistake).fadeOut(1000);
+								allPen[i].style.transition='500ms';
+								allPen[i].style.top=positionAll[i].top+'px';
+								allPen[i].style.left=positionAll[i].left+'px';
+							},1000)
+						}else{
+							$(correct).fadeIn(1000);
+							allPen[i].style.display='none';
+							index++;
+							setTimeout(function (){
+							$(correct).fadeOut(1000);
+								if(index==3){
+									location.href='three.html'
+								}
+							},1000)
+							
+						}
+					})
+ 				}
+    </script>
+  </body>
+</html>
